@@ -10,6 +10,10 @@ import Details from "./Details";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { Icon } from "react-native-vector-icons/Icon";
 import Profile from "./Profile";
+import SignUp from "./SignUp";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import List from "./List";
+
 const Stack=createStackNavigator();
 function App()
 { 
@@ -28,9 +32,43 @@ function App()
 const Tab = createMaterialBottomTabNavigator();
 const BotTabs=()=>{
 return(
-  <Tab.Navigator>
-    <Tab.Screen name='Home1' component={Home}/>
+  <Tab.Navigator
+  labeled={false}//hides the tab screen labels
+  screenOptions={({route})=>({
+    tabBarIcon:({focused,color})=>{
+      let iconName;
+      if(route.name==='Home1')
+      {
+        iconName=focused
+        ?'home'
+        :'home-outline'
+      }
+
+      else if(route.name==='Search')
+      {
+        iconName=focused
+        ?'card-search'
+        :'card-search-outline'
+      }
+
+      else if(route.name==='Profile')
+      {
+        iconName=focused
+        ?'account'
+        :'account-outline'
+      }
+      else if(route.name==='List')
+      {
+        iconName=focused
+        ?'view-list'
+        :'view-list-outline'
+      }
+      return <MaterialCommunityIcons name={iconName} size={28} color={color}/>
+    }
+  })}>
+    <Tab.Screen name='Home1' component={Home} />
     <Tab.Screen name='Search' component={Search}/>
+    <Tab.Screen name='List' component={List}/>
     <Tab.Screen name='Profile' component={Profile}/>
   </Tab.Navigator>
 )
@@ -39,6 +77,7 @@ return(
     <NavigationContainer>
     <Stack.Navigator>
       <Stack.Screen name='Login' component={Login} options={{headerShown:false}}/>
+      <Stack.Screen name='SignUp' component={SignUp} options={{headerShown:false}}/>
       <Stack.Screen name='Home' component={BotTabs} options={{headerShown:false}}/>
       <Stack.Screen name='Search' component={Search} options={{headerShown:false}}/>
       <Stack.Screen name='Details' component={Details} options={{headerShown:false}}/>

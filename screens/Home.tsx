@@ -3,13 +3,15 @@ import {useState,useEffect} from 'react';
 import {View,Image,FlatList} from 'react-native';
 import {Text,TextInput,Button,ActivityIndicator,Card} from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
-
+import firestore from '@react-native-firebase/firestore';
+import firebase from '@react-native-firebase/app'
 function Home(props)
 {
-    const [load,isLoad]=useState(false);
+  const db=firestore();
+const [load,isLoad]=useState(false);
 const [data,setData]=useState(null);
 const [upcoming,setUpcoming]=useState(null);
-
+const [name,setName]=useState('');
 useEffect(()=>{
   const url=`https://api.jikan.moe/v4/top/anime?filter=favorite`
   fetch(url)
@@ -19,7 +21,16 @@ useEffect(()=>{
     console.log(error)
   })
 },[])
-
+useEffect(()=>{
+  const user=auth().currentUser;
+  const sub=firestore()
+  .collection('users')
+  .doc(user?.uid)
+  .onSnapshot(documentSnapshot=>{
+    setName(documentSnapshot.data()?.Name);
+  })
+  return()=>sub();
+},[])
 const handleGet=()=>{
     isLoad(true);
     const url=`https://api.jikan.moe/v4/top/characters`
@@ -27,16 +38,26 @@ const handleGet=()=>{
     .then(response=>
       response.json()
       )
-      .then((json)=>{setData(json); isLoad(false)})
+      .then((json)=>{setData(json);})
     .catch((error)=>{
       console.log(error);
     })
+}
+const handleList=(id)=>{
+  console.log(id)
+  const user=auth().currentUser;
+  const ref=db.collection('users').doc(user?.uid)
+  ref.update({'list':firebase.firestore.FieldValue.arrayUnion(id)})
+  // const recDocRef=db.collection('recruit').doc(jobId);
+  // recDocRef.update({"appllicants":firebase.firestore.FieldValue.arrayUnion(user.uid)})
+
 }
 
   return (
     <View style={{flex:1,paddingHorizontal:20,backgroundColor:'white'}}>
       
-      <Text style={{textAlign:'center',paddingTop:50,fontSize:18}}>Hello Welcome to Anime App</Text>
+      <Text style={{textAlign:'center',paddingTop:50,fontSize:18}}>Hello {name}</Text>
+      <Text style={{textAlign:'center',paddingTop:10,fontSize:18}}>Welcome to Animeverse</Text>
       <Text style={{textAlign:'center',paddingTop:50,paddingBottom:20,}} variant="titleLarge">Favourite Anime of all time</Text>
       {upcoming?
         <FlatList
@@ -50,12 +71,14 @@ const handleGet=()=>{
                         <Text variant="bodyLarge" style={{position:'absolute',left:230,top:120}}> Rank: #{item.rank}</Text>
                          <Text variant="bodyLarge" style={{position:'absolute',left:230,top:140}}> Popularity: #{item.popularity}</Text>
                          <Text variant="bodyLarge" style={{position:'absolute',left:230,top:160}}> Episodes: {item.episodes}</Text>
-
-                         <Text variant="bodyLarge" style={{position:'absolute',left:230,top:180}}> Score: {item.score}</Text> 
+                         
+                         <Text variant="bodyLarge" style={{position:'absolute',left:230,paddingTop:180}}> Score: {item.score}</Text> 
+                         <Text variant="bodyLarge" style={{position:'absolute',left:230,top:200}}> Studio: {item.studios[0].name}</Text>
                          {/* <Text variant="bodySmall" style={{position:'absolute',right:75,top:230}}> Score</Text> */}
                          <Image source={{uri:item.images.jpg.large_image_url}} style={{height:300,width:200,resizeMode:'contain',borderRadius:20,}}/>
                          <Card.Actions>
-                         <Button style={{right:35,position:'absolute',bottom:50,}} onPress={()=>props.navigation.navigate('Details',{title:item.title,yid:item.trailer.youtube_id,synopsis:item.synopsis,background:item.background})} mode='contained-tonal'>View</Button>
+                         <Button style={{right:30,position:'absolute',bottom:70,}} icon='eye' onPress={()=>props.navigation.navigate('Details',{title:item.title,yid:item.trailer.youtube_id,synopsis:item.synopsis,background:item.background})} mode='contained-tonal'>View</Button>
+                         <Button style={{right:35,position:'absolute',bottom:20,}} mode='contained-tonal' icon='view-list' onPress={()=>handleList(item.mal_id)} >Add</Button>
                          </Card.Actions>              
                 </Card.Content>
               </Card>

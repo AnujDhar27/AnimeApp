@@ -24,10 +24,6 @@ function Search(props)
       if(input==='')
       {
         setSearchData(noSearchData);
-        // const url=`https://api.jikan.moe/v4/top/anime?filter=airing&_limit=10`
-        // await fetch(url)
-        // .then(response=>response.json())
-        // .then(json=>{setSearchData(json)})
       }
       else{
         const url=`https://api.jikan.moe/v4/anime?q=${input}&_limit=10`
@@ -46,7 +42,7 @@ function Search(props)
   return (
     <View style={{flex:1,paddingHorizontal:20,backgroundColor:'white'}}>
       
-      <Text style={{textAlign:'center',paddingTop:50,fontSize:18}}>Search Anime Name</Text>
+      <Text style={{textAlign:'center',paddingTop:50,fontSize:18}}>Search for Anime</Text>
       <Searchbar
       placeholder="Enter Anime Name"
       value={input}
@@ -66,7 +62,6 @@ function Search(props)
                          <Text variant="bodyLarge" style={{position:'absolute',left:230,top:120}}> Rank: #{item.rank}</Text>
                          <Text variant="bodyLarge" style={{position:'absolute',left:230,top:140}}> Popularity: #{item.popularity}</Text>
                          <Text variant="bodyLarge" style={{position:'absolute',left:230,top:160}}> Episodes: {item.episodes}</Text>
-
                          <Text variant="bodyLarge" style={{position:'absolute',left:230,top:180}}> Score: {item.score}</Text> 
                          <Image source={{uri:item.images.jpg.large_image_url}} style={{height:300,width:200,resizeMode:'contain',borderRadius:20,}}/>
                          <Card.Actions>
