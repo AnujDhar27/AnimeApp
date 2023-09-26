@@ -13,6 +13,7 @@ import Profile from "./Profile";
 import SignUp from "./SignUp";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import List from "./List";
+import Episodes from "./Episodes";
 
 const Stack=createStackNavigator();
 function App()
@@ -81,7 +82,7 @@ return(
       <Stack.Screen name='Home' component={BotTabs} options={{headerShown:false}}/>
       <Stack.Screen name='Search' component={Search} options={{headerShown:false}}/>
       <Stack.Screen name='Details' component={Details} options={{headerShown:false}}/>
-
+      <Stack.Screen name='Episodes' component={Episodes} options={{headerShown:false}}/>
     </Stack.Navigator>
     </NavigationContainer>
   )
