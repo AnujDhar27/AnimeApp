@@ -4,12 +4,24 @@ import {View,Image, FlatList} from 'react-native';
 import { ScrollView } from "react-native-gesture-handler";
 import {Text,TextInput,Button,ActivityIndicator, Searchbar,Card} from 'react-native-paper';
 import { Colors } from "react-native/Libraries/NewAppScreen";
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import firebase from '@react-native-firebase/app'
 function Search(props)
 {
+    const db=firestore();
     const [input,setInput]=useState('');
     const [searchData,setSearchData]=useState(null);
     const [noSearchData,setNoSearchData]=useState(null);
-
+    const handleList=(id)=>{
+      console.log(id)
+      const user=auth().currentUser;
+      const ref=db.collection('users').doc(user?.uid)
+      ref.update({'list':firebase.firestore.FieldValue.arrayUnion(id)})
+      // const recDocRef=db.collection('recruit').doc(jobId);
+      // recDocRef.update({"appllicants":firebase.firestore.FieldValue.arrayUnion(user.uid)})
+    
+    }
     useEffect(()=>{
       const url=`https://api.jikan.moe/v4/top/anime?filter=airing`
       fetch(url)
@@ -42,7 +54,7 @@ function Search(props)
   return (
     <View style={{flex:1,paddingHorizontal:20,backgroundColor:'white'}}>
       
-      <Text style={{textAlign:'center',paddingTop:50,fontSize:18}}>Search for Anime</Text>
+      <Text style={{textAlign:'center',paddingTop:30,fontSize:18}}>Search for Anime</Text>
       <Searchbar
       placeholder="Enter Anime Name"
       value={input}
@@ -65,7 +77,8 @@ function Search(props)
                          <Text variant="bodyLarge" style={{position:'absolute',left:230,top:180}}> Score: {item.score}</Text> 
                          <Image source={{uri:item.images.jpg.large_image_url}} style={{height:300,width:200,resizeMode:'contain',borderRadius:20,}}/>
                          <Card.Actions>
-                         <Button style={{right:35,position:'absolute',bottom:50,}} onPress={()=>props.navigation.navigate('Details',{title:item.title,yid:item.trailer.youtube_id,synopsis:item.synopsis,background:item.background})} mode='contained-tonal'>View</Button>
+                         <Button style={{right:30,position:'absolute',bottom:70,}} icon='eye' onPress={()=>props.navigation.navigate('Details',{title:item.title,yid:item.trailer.youtube_id,synopsis:item.synopsis,background:item.background})} mode='contained-tonal'>View</Button>
+                         <Button style={{right:35,position:'absolute',bottom:20,}} mode='contained-tonal' icon='view-list' onPress={()=>handleList(item.mal_id)} >Add</Button>
                          </Card.Actions>              
                 </Card.Content>
               </Card>
@@ -87,7 +100,8 @@ function Search(props)
                          <Text variant="bodyLarge" style={{position:'absolute',left:230,top:180}}> Score: {item.score}</Text> 
                          <Image source={{uri:item.images.jpg.large_image_url}} style={{height:300,width:200,resizeMode:'contain',borderRadius:20,}}/>
                          <Card.Actions>
-                         <Button style={{right:35,position:'absolute',bottom:50,}} onPress={()=>props.navigation.navigate('Details',{title:item.title,yid:item.trailer.youtube_id,synopsis:item.synopsis,background:item.background})} mode='contained-tonal'>View</Button>
+                         <Button style={{right:30,position:'absolute',bottom:70,}} icon='eye' onPress={()=>props.navigation.navigate('Details',{title:item.title,yid:item.trailer.youtube_id,synopsis:item.synopsis,background:item.background})} mode='contained-tonal'>View</Button>
+                         <Button style={{right:35,position:'absolute',bottom:20,}} mode='contained-tonal' icon='view-list' onPress={()=>handleList(item.mal_id)} >Add</Button>
                          </Card.Actions>              
                 </Card.Content>
               </Card>

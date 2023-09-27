@@ -8,29 +8,30 @@ import Home from "./Home";
 import Search from "./Search";
 import Details from "./Details";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Icon } from "react-native-vector-icons/Icon";
 import Profile from "./Profile";
 import SignUp from "./SignUp";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import List from "./List";
 import Episodes from "./Episodes";
+import Completed from "./Completed";
 
 const Stack=createStackNavigator();
 function App()
 { 
-// const navigation=useNavigation();
-//   useEffect(() => {
-//     const subscriber = auth().onAuthStateChanged(user => {
-
-//       if (user) {
-//         // User is authenticated; navigate to the Home screen.
-//         navigation.navigate('Home');
-//       }
-//     });
-
-//     return subscriber; // unsubscribe on unmount
-//   }, []);
 const Tab = createMaterialBottomTabNavigator();
+const Tab2 = createMaterialTopTabNavigator();
+
+const TobTabs=()=>{
+  return(
+    <Tab2.Navigator>
+    <Tab2.Screen name='Ongoing' component={List}/>
+    <Tab2.Screen name='Completed' component={Completed} />
+    </Tab2.Navigator>
+  )
+};
+
 const BotTabs=()=>{
 return(
   <Tab.Navigator
@@ -69,7 +70,7 @@ return(
   })}>
     <Tab.Screen name='Home1' component={Home} />
     <Tab.Screen name='Search' component={Search}/>
-    <Tab.Screen name='List' component={List}/>
+    <Tab.Screen name='List' component={TobTabs}/>
     <Tab.Screen name='Profile' component={Profile}/>
   </Tab.Navigator>
 )

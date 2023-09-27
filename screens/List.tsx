@@ -6,7 +6,7 @@ import firestore from '@react-native-firebase/firestore';
 
 const List = (props) => {
   const [Data, setData] = useState([]);
-  const [ret, setRet] = useState([]); // Initialize as an empty array
+  const [ret, setRet] = useState([]); 
 
   useEffect(() => {
     const user = auth().currentUser;
@@ -48,16 +48,14 @@ const List = (props) => {
   };
   return (
     <View style={{ flex: 1, paddingHorizontal: 20 }}>
-      <Text style={{ textAlign: 'center', paddingTop: 50, paddingBottom: 20 }} variant="titleLarge">
-        WatchList
-      </Text>
+
       {ret.length > 0 ? (
         <FlatList
         data={ret}
         keyExtractor={(item) => item.data.mal_id.toString()}
         renderItem={({ item }) => (
           <View>
-            <Card style={{ marginBottom: 20 }}>
+            <Card style={{ marginBottom: 20,marginTop:30, }}>
               <Card.Content>
               <Text variant="bodyLarge" style={{textAlign:'center',paddingBottom:10,}}> {item.data.title}</Text>
                          <Text variant="bodyLarge" style={{position:'absolute',left:230,top:120}}> Rank: #{item.data.rank}</Text>
