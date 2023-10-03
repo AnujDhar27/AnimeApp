@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View} from 'react-native';
-import { Button, TextInput,Text } from 'react-native-paper';
+import { Button, TextInput,Text,Dialog } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 function Login(props) {
@@ -10,6 +10,8 @@ function Login(props) {
   const [num,setNum]=useState('');
   const [mail,setMail]=useState('');
   const [pass,setPass]=useState('');
+  const [vis,setVis]=useState(false);
+  const [errorMessage,setErrorMessage]=useState('');
 
   const handleLogIn=()=>{
     auth()
@@ -18,7 +20,11 @@ function Login(props) {
       props.navigation.navigate('Home')
     })
     .catch(error=>{
-      console.log(error);
+      console.log(error.code);
+      if(error.code==='auth/invalid-login'){
+      setErrorMessage('Invalid Login Credentials');
+      setVis(true);
+      }
     })
 
   }
@@ -95,6 +101,17 @@ function Login(props) {
       <Button mode='contained' disabled={code===''?true:false} style={{marginTop:20}} onPress={confirmCode} >Sign in</Button> */}
       <Button mode='contained' onPress={handleLogIn} style={{marginTop:20,}}>Log in</Button>
       <TouchableOpacity  onPress={()=>props.navigation.navigate('SignUp')}><Text style={{marginTop:20,marginLeft:245,}} variant='bodyLarge'>New user? Sign Up</Text></TouchableOpacity>
+      <Dialog visible={vis}>
+                <Dialog.Title style={{textAlign:'center'}}>Alert!</Dialog.Title>
+                <Dialog.Content>
+                    <Text variant='bodyMedium' style={{textAlign:'center'}}>An error has occured while logging in the user</Text>
+                    <Text variant='bodyMedium'style={{textAlign:'center'}} >{errorMessage}</Text>
+                    <Text variant='bodyMedium' style={{textAlign:'center'}}>Please Retry!</Text>
+                </Dialog.Content>
+                <Dialog.Actions>
+                    <Button onPress={()=>setVis(false)}>Retry</Button>
+                </Dialog.Actions>
+             </Dialog>
       </View>
     );
   }

@@ -7,6 +7,22 @@ import firebase from '@react-native-firebase/app'
 const Profile=(props)=>{
     const db=firestore();
     const [name,setName]=useState('');
+    const [num,setNum]=useState(0);
+    const [ongo,setOngo]=useState(0);
+
+    useEffect(()=>{
+        const user=auth().currentUser
+        const sub=firestore()
+        .collection('users')
+        .doc(user?.uid)
+        .onSnapshot(documentSnapshot=>{
+            if(documentSnapshot.data()?.completed)
+            setNum((documentSnapshot.data().completed).length)
+
+            if(documentSnapshot.data()?.list)
+            setOngo((documentSnapshot.data().list).length)
+        })
+    })
     const handleSignOut=()=>{
         console.log('pressed')
       auth()
@@ -31,6 +47,8 @@ const Profile=(props)=>{
             <Avatar.Icon size={210}  style={{alignSelf:'center',marginTop:20,}} icon='account-outline'/>
             <Text variant='headlineSmall' style={{paddingTop:80,textAlign:'center'}}>Name: {name}</Text>
             <Text variant='headlineSmall' style={{paddingTop:20,textAlign:'center'}}>Email: {mail}</Text>
+            <Text variant='headlineSmall' style={{paddingTop:20,textAlign:'center'}}>Animes Completed: {num}</Text>
+            <Text variant='headlineSmall' style={{paddingTop:20,textAlign:'center'}}>Animes Ongoing: {ongo}</Text>
             <Button mode='contained-tonal' style={{marginTop:30}} onPress={handleSignOut}>Sign Out</Button>
         </View>
     )

@@ -25,7 +25,7 @@ const Tab2 = createMaterialTopTabNavigator();
 
 const TobTabs=()=>{
   return(
-    <Tab2.Navigator>
+    <Tab2.Navigator screenOptions={{tabBarActiveTintColor:'#6750A4',tabBarInactiveTintColor:'grey',}}>
     <Tab2.Screen name='Ongoing' component={List}/>
     <Tab2.Screen name='Completed' component={Completed} />
     </Tab2.Navigator>

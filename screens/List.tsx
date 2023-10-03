@@ -3,10 +3,11 @@ import { View, Image, FlatList } from 'react-native';
 import { Text, Card, Button } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-
+import firebase from '@react-native-firebase/app'
 const List = (props) => {
   const [Data, setData] = useState([]);
   const [ret, setRet] = useState([]); 
+const db=firestore();
 
   useEffect(() => {
     const user = auth().currentUser;
@@ -16,9 +17,24 @@ const List = (props) => {
       .onSnapshot((documentSnapshot) => {
         setData(documentSnapshot.data()?.list);
       });
-
     return () => sub();
   }, []);
+
+  const handleRemove=(id)=>{
+  const user=auth().currentUser;
+  const ref=db.collection('users').doc(user?.uid)
+  ref.update({'list':firebase.firestore.FieldValue.arrayRemove(id)})
+
+  }
+const handleComplete=(id)=>{
+  console.log(id)
+  const user=auth().currentUser;
+  const ref=db.collection('users').doc(user?.uid)
+  ref.update({'completed':firebase.firestore.FieldValue.arrayUnion(id)})
+  ref.update({'list':firebase.firestore.FieldValue.arrayRemove(id)})
+
+
+}
 
   useEffect(() => {
     // Fetch data for each id in Data and accumulate it in an array
@@ -38,9 +54,10 @@ const List = (props) => {
       if (response.ok) {
         const json = await response.json();
         return json;
-      } else {
-        throw new Error('Network response was not ok');
       }
+      // else {
+      //   throw new Error('Network response was not ok');
+      // }
     } catch (error) {
       console.log(error);
       throw error;
@@ -58,13 +75,15 @@ const List = (props) => {
             <Card style={{ marginBottom: 20,marginTop:30, }}>
               <Card.Content>
               <Text variant="bodyLarge" style={{textAlign:'center',paddingBottom:10,}}> {item.data.title}</Text>
-                         <Text variant="bodyLarge" style={{position:'absolute',left:230,top:120}}> Rank: #{item.data.rank}</Text>
-                         <Text variant="bodyLarge" style={{position:'absolute',left:230,top:140}}> Popularity: #{item.data.popularity}</Text>
-                         <Text variant="bodyLarge" style={{position:'absolute',left:230,top:160}}> Episodes: {item.data.episodes}</Text>
-                         <Text variant="bodyLarge" style={{position:'absolute',left:230,top:180}}> Score: {item.data.score}</Text> 
+                         <Text variant="bodyLarge" style={{position:'absolute',left:230,top:80}}> Rank: #{item.data.rank}</Text>
+                         <Text variant="bodyLarge" style={{position:'absolute',left:230,top:100}}> Popularity: #{item.data.popularity}</Text>
+                         <Text variant="bodyLarge" style={{position:'absolute',left:230,top:120}}> Episodes: {item.data.episodes}</Text>
+                         <Text variant="bodyLarge" style={{position:'absolute',left:230,top:140}}> Score: {item.data.score}</Text> 
                          <Image source={{uri:item.data.images.jpg.large_image_url}} style={{height:300,width:200,resizeMode:'contain',borderRadius:20,}}/>
                          <Card.Actions>
-                         <Button style={{right:10,position:'absolute',bottom:50,}} onPress={()=>props.navigation.navigate('Episodes',{ID:item.data.mal_id})} icon='eye' mode='contained-tonal'>Episodes</Button>
+                         <Button style={{right:10,position:'absolute',bottom:150,}} onPress={()=>props.navigation.navigate('Episodes',{ID:item.data.mal_id})} icon='eye' mode='contained-tonal'>Episodes</Button>
+                         <Button style={{position:'absolute',bottom:100,}} onPress={()=>handleComplete(item.data.mal_id)} icon='plus-circle' mode='contained-tonal'>Completed</Button>
+                         <Button style={{right:10,position:'absolute',bottom:50,}} onPress={()=>handleRemove(item.data.mal_id)} icon='minus-circle' mode='contained-tonal'>Remove</Button>
                          </Card.Actions> 
               </Card.Content>
             </Card>

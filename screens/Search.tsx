@@ -13,14 +13,26 @@ function Search(props)
     const [input,setInput]=useState('');
     const [searchData,setSearchData]=useState(null);
     const [noSearchData,setNoSearchData]=useState(null);
+    const [list,setList]=useState([])
+    const [comp,setComp]=useState([])
+    useEffect(()=>{
+      const user=auth().currentUser;
+      const sub=firestore()
+      .collection('users')
+      .doc(user?.uid)
+      .onSnapshot(documentSnapshot=>{
+        if(documentSnapshot.data()?.list)
+        setList(documentSnapshot.data()?.list)
+      
+        if(documentSnapshot.data()?.completed)
+        setComp(documentSnapshot.data()?.completed)
+      })
+    },[])
     const handleList=(id)=>{
       console.log(id)
       const user=auth().currentUser;
       const ref=db.collection('users').doc(user?.uid)
-      ref.update({'list':firebase.firestore.FieldValue.arrayUnion(id)})
-      // const recDocRef=db.collection('recruit').doc(jobId);
-      // recDocRef.update({"appllicants":firebase.firestore.FieldValue.arrayUnion(user.uid)})
-    
+      ref.update({'list':firebase.firestore.FieldValue.arrayUnion(id)})    
     }
     useEffect(()=>{
       const url=`https://api.jikan.moe/v4/top/anime?filter=airing`
@@ -78,7 +90,7 @@ function Search(props)
                          <Image source={{uri:item.images.jpg.large_image_url}} style={{height:300,width:200,resizeMode:'contain',borderRadius:20,}}/>
                          <Card.Actions>
                          <Button style={{right:30,position:'absolute',bottom:70,}} icon='eye' onPress={()=>props.navigation.navigate('Details',{title:item.title,yid:item.trailer.youtube_id,synopsis:item.synopsis,background:item.background})} mode='contained-tonal'>View</Button>
-                         <Button style={{right:35,position:'absolute',bottom:20,}} mode='contained-tonal' icon='view-list' onPress={()=>handleList(item.mal_id)} >Add</Button>
+                         <Button style={{right:35,position:'absolute',bottom:20,}} mode='contained-tonal' icon='view-list' onPress={()=>handleList(item.mal_id)} disabled={list.includes(item.mal_id)||comp.includes(item.mal_id)?true:false}>Add</Button>
                          </Card.Actions>              
                 </Card.Content>
               </Card>
@@ -101,7 +113,7 @@ function Search(props)
                          <Image source={{uri:item.images.jpg.large_image_url}} style={{height:300,width:200,resizeMode:'contain',borderRadius:20,}}/>
                          <Card.Actions>
                          <Button style={{right:30,position:'absolute',bottom:70,}} icon='eye' onPress={()=>props.navigation.navigate('Details',{title:item.title,yid:item.trailer.youtube_id,synopsis:item.synopsis,background:item.background})} mode='contained-tonal'>View</Button>
-                         <Button style={{right:35,position:'absolute',bottom:20,}} mode='contained-tonal' icon='view-list' onPress={()=>handleList(item.mal_id)} >Add</Button>
+                         <Button style={{right:35,position:'absolute',bottom:20,}} mode='contained-tonal' icon='view-list' onPress={()=>handleList(item.mal_id)} disabled={list.includes(item.mal_id)||comp.includes(item.mal_id)?true:false}>Add</Button>
                          </Card.Actions>              
                 </Card.Content>
               </Card>

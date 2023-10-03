@@ -12,6 +12,21 @@ const [load,isLoad]=useState(false);
 const [data,setData]=useState(null);
 const [upcoming,setUpcoming]=useState(null);
 const [name,setName]=useState('');
+const [list,setList]=useState([])
+    const [comp,setComp]=useState([])
+    useEffect(()=>{
+      const user=auth().currentUser;
+      const sub=firestore()
+      .collection('users')
+      .doc(user?.uid)
+      .onSnapshot(documentSnapshot=>{
+        if(documentSnapshot.data()?.list)
+        setList(documentSnapshot.data()?.list)
+      
+        if(documentSnapshot.data()?.completed)
+        setComp(documentSnapshot.data()?.completed)
+      })
+    },[])
 useEffect(()=>{
   const url=`https://api.jikan.moe/v4/top/anime?filter=favorite`
   fetch(url)
@@ -78,7 +93,7 @@ const handleList=(id)=>{
                          <Image source={{uri:item.images.jpg.large_image_url}} style={{height:300,width:200,resizeMode:'contain',borderRadius:20,}}/>
                          <Card.Actions>
                          <Button style={{right:30,position:'absolute',bottom:70,}} icon='eye' onPress={()=>props.navigation.navigate('Details',{title:item.title,yid:item.trailer.youtube_id,synopsis:item.synopsis,background:item.background})} mode='contained-tonal'>View</Button>
-                         <Button style={{right:35,position:'absolute',bottom:20,}} mode='contained-tonal' icon='view-list' onPress={()=>handleList(item.mal_id)} >Add</Button>
+                         <Button style={{right:35,position:'absolute',bottom:20,}} mode='contained-tonal' icon='view-list' onPress={()=>handleList(item.mal_id)} disabled={list.includes(item.mal_id)||comp.includes(item.mal_id)?true:false}>Add</Button>
                          </Card.Actions>              
                 </Card.Content>
               </Card>
