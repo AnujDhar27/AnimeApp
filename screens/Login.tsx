@@ -28,20 +28,18 @@ function Login(props) {
     })
 
   }
-  // verification code (OTP - One-Time-Passcode)
-  // const [code, setCode] = useState('');
+  
+  //if user has already logged in once when the app is relaunched he/she will not have to login again
+  function onAuthStateChanged(user) {
+    setUser(user);
+  }
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    if(user)
+    props.navigation.navigate('Home')
+    return subscriber; // unsubscribe on unmount
+  });
 
-  // function onAuthStateChanged(user) {
-  //   setUser(user);
-  //   if (initializing) setInitializing(false);
-  // }
-
-  // useEffect(() => {
-  //   const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-  //   if(user)
-  //   props.navigation.navigate('Home')
-  //   return subscriber; // unsubscribe on unmount
-  // }, []);
 
   // Handle the button press
   // const signInWithPhoneNumber=async()=>{

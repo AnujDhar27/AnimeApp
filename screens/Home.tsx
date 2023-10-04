@@ -88,11 +88,11 @@ const handleList=(id)=>{
                          <Text variant="bodyLarge" style={{position:'absolute',left:230,top:160}}> Episodes: {item.episodes}</Text>
                          
                          <Text variant="bodyLarge" style={{position:'absolute',left:230,paddingTop:180}}> Score: {item.score}</Text> 
-                         <Text variant="bodyLarge" style={{position:'absolute',left:230,top:200}}> Studio: {item.studios[0].name}</Text>
+                         {/* <Text variant="bodyLarge" style={{position:'absolute',left:230,top:200}}> Studio: {item.studios[0].name}</Text> */}
                          {/* <Text variant="bodySmall" style={{position:'absolute',right:75,top:230}}> Score</Text> */}
                          <Image source={{uri:item.images.jpg.large_image_url}} style={{height:300,width:200,resizeMode:'contain',borderRadius:20,}}/>
                          <Card.Actions>
-                         <Button style={{right:30,position:'absolute',bottom:70,}} icon='eye' onPress={()=>props.navigation.navigate('Details',{title:item.title,yid:item.trailer.youtube_id,synopsis:item.synopsis,background:item.background})} mode='contained-tonal'>View</Button>
+                         <Button style={{right:30,position:'absolute',bottom:70,}} icon='eye' onPress={()=>props.navigation.navigate('Details',{title:item.title,yid:item.trailer.youtube_id,synopsis:item.synopsis,background:item.background,id:item.mal_id})} mode='contained-tonal'>View</Button>
                          <Button style={{right:35,position:'absolute',bottom:20,}} mode='contained-tonal' icon='view-list' onPress={()=>handleList(item.mal_id)} disabled={list.includes(item.mal_id)||comp.includes(item.mal_id)?true:false}>Add</Button>
                          </Card.Actions>              
                 </Card.Content>
