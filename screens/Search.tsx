@@ -16,7 +16,7 @@ function Search(props)
     const [noSearchData,setNoSearchData]=useState(null);
     const [list,setList]=useState([])
     const [comp,setComp]=useState([])
-    const [filter,setFilter]=useState('airing')
+    // const [filter,setFilter]=useState('')
 
     useEffect(()=>{
       const user=auth().currentUser;
@@ -40,7 +40,7 @@ function Search(props)
     }
 
     useEffect(()=>{
-      const url=`https://api.jikan.moe/v4/anime?filter=${filter}`
+      const url=`https://api.jikan.moe/v4/anime?limit=10`
       fetch(url)
       .then(response=>response.json())
       .then((json)=>{setNoSearchData(json)})
@@ -55,7 +55,7 @@ function Search(props)
         setSearchData(noSearchData);
       }
       else{
-        const url=`https://api.jikan.moe/v4/anime?q=${input}&_limit=10`
+        const url=`https://api.jikan.moe/v4/anime?q=${input}&limit=10`
         await fetch(url)
         .then(response=>response.json())
         .then(json=>{setSearchData(json)})
@@ -149,7 +149,7 @@ function Search(props)
 
 
   return (
-    <View style={{flex:1,paddingHorizontal:20,backgroundColor:'white'}}>
+    <View style={{flex:1,paddingHorizontal:20,backgroundColor:'#E8DEF8'}}>
       
       <Text style={{textAlign:'center',paddingTop:30,fontSize:18}}>Search for Anime</Text>
       <Searchbar
@@ -158,7 +158,7 @@ function Search(props)
       onChangeText={(input)=>{handleSearch(input);setInput(input)}}
       style={{margin:10,marginBottom:20,}}
       />
-      <SelectCountry
+      {/* <SelectCountry
       style={{backgroundColor:'#EADDFF',height:50,width:150,alignSelf:'left',borderRadius:20,marginBottom:20,}}
       placeholderStyle={{color:'black',textAlign:'center'}}
       selectedTextStyle={{color:'black',textAlign:'center',}}
@@ -169,9 +169,9 @@ function Search(props)
       labelField="lable"
       placeholder="Genres"
       onChange={e => {
-        setCountry(e.value),console.log(e.lable);
+        setCountry(e.value),setFilter(e.lable);
       }}
-      />
+      /> */}
 
       {
         searchData?
@@ -190,7 +190,7 @@ function Search(props)
                          <Image source={{uri:item.images.jpg.large_image_url}} style={{height:300,width:200,resizeMode:'contain',borderRadius:20,}}/>
                          <Card.Actions>
                          <Button style={{right:30,position:'absolute',bottom:70,}} icon='eye' onPress={()=>props.navigation.navigate('Details',{title:item.title,yid:item.trailer.youtube_id,synopsis:item.synopsis,background:item.background})} mode='contained-tonal'>View</Button>
-                         <Button style={{right:35,position:'absolute',bottom:20,}} mode='contained-tonal' icon='view-list' onPress={()=>handleList(item.mal_id)} disabled={list.includes(item.mal_id)||comp.includes(item.mal_id)?true:false}>Add</Button>
+                         {list.includes(item.mal_id)||comp.includes(item.mal_id)?(<Button style={{right:25,position:'absolute',bottom:20,}} icon='playlist-check' disabled={true}>Added</Button>):<Button style={{right:35,position:'absolute',bottom:20,}} mode='contained-tonal' icon='view-list' onPress={()=>handleList(item.mal_id)}>Add</Button>}
                          </Card.Actions>              
                 </Card.Content>
               </Card>
@@ -213,7 +213,7 @@ function Search(props)
                          <Image source={{uri:item.images.jpg.large_image_url}} style={{height:300,width:200,resizeMode:'contain',borderRadius:20,}}/>
                          <Card.Actions>
                          <Button style={{right:30,position:'absolute',bottom:70,}} icon='eye' onPress={()=>props.navigation.navigate('Details',{title:item.title,yid:item.trailer.youtube_id,synopsis:item.synopsis,background:item.background,id:item.mal_id})} mode='contained-tonal'>View</Button>
-                         <Button style={{right:35,position:'absolute',bottom:20,}} mode='contained-tonal' icon='view-list' onPress={()=>handleList(item.mal_id)} disabled={list.includes(item.mal_id)||comp.includes(item.mal_id)?true:false}>Add</Button>
+                         {list.includes(item.mal_id)||comp.includes(item.mal_id)?(<Button style={{right:25,position:'absolute',bottom:20,}} icon='playlist-check' disabled={true}>Added</Button>):<Button style={{right:35,position:'absolute',bottom:20,}} mode='contained-tonal' icon='view-list' onPress={()=>handleList(item.mal_id)}>Add</Button>}
                          </Card.Actions>              
                 </Card.Content>
               </Card>

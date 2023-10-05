@@ -26,14 +26,13 @@ const Episodes=(props)=>{
         })
         },[])
 
-    const handleCheck=(epId)=>{
-        console.log('pressed')
+    const handleCheck=async(epId)=>{
         const user=auth().currentUser;
         console.log(epId);
         const updateObject = {};
         updateObject[ID] = firebase.firestore.FieldValue.arrayUnion(epId);
         const ref=db.collection('users').doc(user?.uid);
-        ref.update(updateObject);
+        await ref.update(updateObject);
     //   ref.update({ID:firebase.firestore.FieldValue.arrayUnion(epId)})
     }
     const handleNext=()=>{
@@ -56,17 +55,22 @@ const Episodes=(props)=>{
     },[])
 
     useEffect(()=>{
-        const url=`https://api.jikan.moe/v4/anime/${ID}/episodes?page=${pgno}`
-        fetch(url)
-        .then(response=>response.json())
-        .then(json=>setEp(json))
-        .catch((error)=>{
-            console.log(error);
-        })
+        const fetchData = async () => {
+            try {
+                const url = `https://api.jikan.moe/v4/anime/${ID}/episodes?page=${pgno}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                setEp(data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+        
     },[pgno])
 return(
     <ImageBackground source={{uri:imageUrl}} resizeMode="cover" style={{flex:1,justifyContent:'center',}} imageStyle={{opacity:0.3,}}> 
-    {/* add opacity to imagestyle prop in imagebackground so that only the opcaity of parent component gets changed*/}
+    {/* add opacity to imagestyle prop in imagebackground so that only the opcaity of parent component gets changed and that of children stay unchanged*/}
 
     <View style={{flex:1,paddingHorizontal:20,}}>
         <IconButton
@@ -82,7 +86,7 @@ return(
             data={ep.data}
             keyExtractor={(item)=>item.mal_id.toString()}
             renderItem={({item})=>(
-                <Checkbox.Item label={`${item.mal_id}. ${item.title}` } labelStyle={{}} style={{margin:10}} status={check.length>0?(check.includes(item.mal_id)?'checked':'unchecked'):'unchecked'} onPress={()=>handleCheck(item.mal_id)}/>
+                <Checkbox.Item label={`${item.mal_id}. ${item.title}` } labelStyle={{fontWeight:'bold'}} style={{margin:10}} status={check.length>0?(check.includes(item.mal_id)?'checked':'unchecked'):'unchecked'} onPress={()=>handleCheck(item.mal_id)}/>
            )}
             />
         ):null}

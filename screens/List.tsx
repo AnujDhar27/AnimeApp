@@ -64,9 +64,9 @@ const handleComplete=(id)=>{
     }
   };
   return (
-    <View style={{ flex: 1, paddingHorizontal: 20 }}>
+    <View style={{ flex: 1, paddingHorizontal: 20,backgroundColor:'#E8DEF8' }}>
 
-      {ret.length > 0 ? (
+      {ret?(
         <FlatList
         data={ret}
         keyExtractor={(item) => item.data.mal_id.toString()}

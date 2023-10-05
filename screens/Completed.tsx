@@ -56,9 +56,9 @@ const Completed=(props)=>{
     }
   };
   return(
-    <View style={{ flex: 1, paddingHorizontal: 20 }}>
+    <View style={{ flex: 1, paddingHorizontal: 20 ,backgroundColor:'#E8DEF8'}}>
 
-      {res.length > 0 ? (
+      {res? (
         <FlatList
         data={res}
         keyExtractor={(item) => item.data.mal_id.toString()}
