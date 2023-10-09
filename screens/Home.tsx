@@ -79,7 +79,7 @@ const handleList=(id)=>{
             />
           </Svg>
           </View>
-          <Text style={{textAlign:'center',paddingTop:40,paddingBottom:30,}} variant="titleLarge">Favourite Anime of all time</Text>
+          <Text style={{textAlign:'center',paddingTop:40,paddingBottom:30,}} variant="titleLarge">Favourite of all time</Text>
       {upcoming?
         <FlatList
           data={upcoming.data}
@@ -105,7 +105,7 @@ const handleList=(id)=>{
               </Card>
             </View>
             )}
-               />:null
+               />:<ActivityIndicator animating={true}/>
           }
       </View>
      

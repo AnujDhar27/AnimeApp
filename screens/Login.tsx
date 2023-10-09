@@ -85,7 +85,7 @@ const handleEye=()=>{
             secureTextEntry={eye==='eye'?false:true}
             />
             <IconButton icon={eye} style={{top:-70,left:350,}} onPress={handleEye}/>
-      <TouchableOpacity  style={{top:-50}} onPress={()=>console.log('forgot')}><Text variant='bodyMedium' style={{textAlign:'right',marginHorizontal:20}}>Forgot Password?</Text></TouchableOpacity>
+      <TouchableOpacity  style={{top:-50}} onPress={()=>props.navigation.navigate('ForgotPass')}><Text variant='bodyMedium' style={{textAlign:'right',marginHorizontal:20}}>Forgot Password?</Text></TouchableOpacity>
       <Button mode='contained' onPress={handleLogIn} style={{top:-20,marginHorizontal:20}}>Log in</Button>
       <TouchableOpacity  onPress={()=>props.navigation.navigate('SignUp')}><Text style={{textAlign:'center',marginTop:10,}} variant='bodyMedium'>New user? <Text style={{color:'#6750A4'}}>Sign Up</Text></Text></TouchableOpacity>
       <Dialog visible={vis}>

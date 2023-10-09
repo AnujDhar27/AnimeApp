@@ -81,7 +81,6 @@ const Completed=(props)=>{
           </View>
         )}
       />
-         
       ):
       <Text>No data</Text>}
     </View>

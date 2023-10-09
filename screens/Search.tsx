@@ -220,7 +220,7 @@ function Search(props)
             </View>
             )}
                />
-        :null
+        :<ActivityIndicator animating={true}/>
       }
     </View>
   )

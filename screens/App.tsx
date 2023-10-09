@@ -2,6 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import React from "react";
 import {useState,useEffect} from 'react';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import {View,Text,TextInput,Button,Image, ActivityIndicator} from 'react-native';
 import Login from "./Login";
 import Home from "./Home";
@@ -12,11 +13,11 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { Icon } from "react-native-vector-icons/Icon";
 import Profile from "./Profile";
 import SignUp from "./SignUp";
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+
 import List from "./List";
 import Episodes from "./Episodes";
 import Completed from "./Completed";
-
+import ForgotPass from "./ForgotPass";
 const Stack=createStackNavigator();
 function App()
 { 
@@ -80,6 +81,7 @@ return(
     <Stack.Navigator>
       <Stack.Screen name='Login' component={Login} options={{headerShown:false}}/>
       <Stack.Screen name='SignUp' component={SignUp} options={{headerShown:false}}/>
+      <Stack.Screen name='ForgotPass' component={ForgotPass} options={{headerShown:false}}/>
       <Stack.Screen name='Home' component={BotTabs} options={{headerShown:false}}/>
       <Stack.Screen name='Search' component={Search} options={{headerShown:false}}/>
       <Stack.Screen name='Details' component={Details} options={{headerShown:false}}/>

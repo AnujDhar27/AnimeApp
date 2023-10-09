@@ -1,5 +1,5 @@
 import {View,Dimensions} from 'react-native'
-import {Text,TextInput,Button, Dialog} from 'react-native-paper';
+import {Text,TextInput,Button, Dialog, IconButton} from 'react-native-paper';
 import { useState } from 'react';
 import auth from '@react-native-firebase/auth';
 import DialogActions from 'react-native-paper/lib/typescript/components/Dialog/DialogActions';
@@ -12,7 +12,18 @@ const SignUp=(props)=>{
     const [mail,setMail]=useState('');
     const [pass,setPass]=useState('');
     const [vis,setVis]=useState(false);
+    const [vis2,setVis2]=useState(false);
+    const [iconName,setIconName]=useState('eye-off')
     const [name,setName]=useState('');
+    const [errorMessage,setErrorMessage]=useState('An unknown error has occured, try again');
+
+    const handleEye=()=>{
+        console.log('pressed')
+        if(iconName==='eye')
+        setIconName('eye-off')
+        if(iconName==='eye-off')
+        setIconName('eye')
+    }
     const handleSignIn=()=>{
         auth()
         .createUserWithEmailAndPassword(mail,pass)
@@ -21,6 +32,18 @@ const SignUp=(props)=>{
             setVis(true);
             const ref=db.collection('users').doc(user?.uid)
             ref.set({'Name': name})
+        })
+        .catch(error=>{
+            console.log(error.code);
+            if(error.code==='auth/email-already-in-use'){
+                setErrorMessage('The email id is already in use, kindly use a different mail id');
+                setVis2(true);
+            }
+            if(error.code==='auth/invalid-email')
+            {
+            setErrorMessage('The email id is invalid, please enter a valid email id')
+            setVis2(true);
+            }
         })
     }
     return(
@@ -40,13 +63,13 @@ const SignUp=(props)=>{
             />
           </Svg>
           </View>
-          <Text style={{marginTop:150,textAlign:'center'}} variant='headlineLarge'>Create your Account</Text>
+          <Text style={{marginTop:60,textAlign:'center'}} variant='headlineLarge'>Create your Account</Text>
             <TextInput
             label='Name'
             placeholder='Enter your name'
             value={name}
             onChangeText={(name)=>setName(name)}
-            style={{marginTop:80,marginHorizontal:20}}
+            style={{marginTop:50,marginHorizontal:20}}
             />
             <TextInput
                 label='Email ID'
@@ -61,8 +84,14 @@ const SignUp=(props)=>{
              value={pass}
              onChangeText={(pass)=>setPass(pass)}
              style={{marginTop:20,marginHorizontal:20}}
+             secureTextEntry={iconName==='eye-off'?true:false}
              />
-             <Button mode='contained' onPress={handleSignIn} style={{marginTop:40,marginHorizontal:20}}>Sign Up</Button>
+             <IconButton
+             icon={iconName}
+             onPress={handleEye}
+             style={{top:-55,left:350,}} 
+             />
+             <Button mode='contained' onPress={handleSignIn} style={{marginTop:-20,marginHorizontal:20}}>Sign Up</Button>
              <Dialog visible={vis}>
                 <Dialog.Title style={{textAlign:'center'}}>Congratulations!</Dialog.Title>
                 <Dialog.Content>
@@ -71,6 +100,15 @@ const SignUp=(props)=>{
                 </Dialog.Content>
                 <Dialog.Actions>
                     <Button onPress={()=>props.navigation.navigate('Login')}>OK</Button>
+                </Dialog.Actions>
+             </Dialog>
+             <Dialog visible={vis2}>
+                <Dialog.Title style={{textAlign:'center'}}>Alert!</Dialog.Title>
+                <Dialog.Content>
+                    <Text variant='bodyMedium'>{errorMessage}</Text>
+                </Dialog.Content>
+                <Dialog.Actions>
+                    <Button onPress={()=>setVis(false)}>OK</Button>
                 </Dialog.Actions>
              </Dialog>
           </View>

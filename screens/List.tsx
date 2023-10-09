@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image, FlatList } from 'react-native';
-import { Text, Card, Button } from 'react-native-paper';
+import { Text, Card, Button, ActivityIndicator } from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app'
@@ -15,6 +15,7 @@ const db=firestore();
       .collection('users')
       .doc(user?.uid)
       .onSnapshot((documentSnapshot) => {
+        if(documentSnapshot.data()?.list)
         setData(documentSnapshot.data()?.list);
       });
     return () => sub();
@@ -90,8 +91,8 @@ const handleComplete=(id)=>{
           </View>
         )}
       />
-         
-      ):null}
+      ):null
+      }
     </View>
   );
 };
