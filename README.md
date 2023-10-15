@@ -1,79 +1,29 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# AnimeVerse
 
-# Getting Started
+AnimeVerse is an all in one app to know everything about anime and keeep a track of your favourite anime episode.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+It is built using react native, jikan api and firebase.
 
-## Step 1: Start the Metro Server
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+Here are some of the screenshots:
 
-To start Metro, run the following command from the _root_ of your React Native project:
+![Screenshot_20231015-121122](https://github.com/AnujDhar27/AnimeVerse/assets/90615759/6d3e709a-5580-4e7e-a849-ccad36d8bab5)
 
-```bash
-# using npm
-npm start
+![Screenshot_20231015-121127](https://github.com/AnujDhar27/AnimeVerse/assets/90615759/5cf5ac65-c63a-4e0f-a5dc-70c9b9430cfe)
 
-# OR using Yarn
-yarn start
-```
+![Screenshot_20231015-121132](https://github.com/AnujDhar27/AnimeVerse/assets/90615759/751a9a9c-8ef1-4d7d-99b9-0ea551be150b)
 
-## Step 2: Start your Application
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+![Screenshot_20231015-121020](https://github.com/AnujDhar27/AnimeVerse/assets/90615759/e44e8903-6595-4449-9ef8-290ca2f71a66)
 
-### For Android
+![Screenshot_20231015-121753](https://github.com/AnujDhar27/AnimeVerse/assets/90615759/d93c1a5f-08e7-494f-9bca-9afa820e8cd6)
 
-```bash
-# using npm
-npm run android
 
-# OR using Yarn
-yarn android
-```
+![Screenshot_20231015-121027](https://github.com/AnujDhar27/AnimeVerse/assets/90615759/04679644-b310-4964-9e43-fe47976725c0)
 
-### For iOS
+![Screenshot_20231015-121105](https://github.com/AnujDhar27/AnimeVerse/assets/90615759/2821b71a-f989-4296-a172-fd9b911b07b8)  ![Screenshot_20231015-121110](https://github.com/AnujDhar27/AnimeVerse/assets/90615759/194240ec-8624-43f1-ad05-e212bc10150a)
 
-```bash
-# using npm
-npm run ios
+![Screenshot_20231015-121803](https://github.com/AnujDhar27/AnimeVerse/assets/90615759/5efa9fc0-3b77-44ab-89b6-ef8e1bbcb173)
 
-# OR using Yarn
-yarn ios
-```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+![Screenshot_20231015-121116](https://github.com/AnujDhar27/AnimeVerse/assets/90615759/5641958c-7299-4d57-98ad-8e34eabdde73)
