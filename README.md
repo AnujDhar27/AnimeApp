@@ -1,6 +1,6 @@
 # AnimeVerse
 
-AnimeVerse is an all in one app to know everything about anime and keeep a track of your favourite anime.
+AnimeVerse is an all in one app to know everything about anime and keep a track of your favourite anime.
 
 It is built using React native, Jikan Api and Firebase.
 
@@ -18,6 +18,9 @@ Userflow of the Application:
 4. You also have an option to add the anime to your Wishlist. The database stores record of all the selected anime and lets you keep a track of the episodes, you can view and manage your wishlist in the wishlist section.
 
 5. In profile section, you can see your personal details as well as the number of completed as well as ongoing animes.
+
+Here is the database structure (Cloud firestore)
+![image](https://github.com/AnujDhar27/AnimeVerse/assets/90615759/99a05853-35fc-4f0a-878d-9c606e39318b)
 
 
 Here are some of the screenshots of the app:
