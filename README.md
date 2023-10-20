@@ -1,11 +1,26 @@
 # AnimeVerse
 
-AnimeVerse is an all in one app to know everything about anime and keeep a track of your favourite anime episode.
+AnimeVerse is an all in one app to know everything about anime and keeep a track of your favourite anime.
 
-It is built using react native, jikan api and firebase.
+It is built using React native, Jikan Api and Firebase.
+
+Inspiration Link for application:
+https://dribbble.com/shots/3217675-Anime-Streaming-Project?utm_source=Clipboard_Shot&utm_campaign=zazulyaziz&utm_content=Anime%20Streaming%20Project&utm_medium=Social_Share&utm_source=Clipboard_Shot&utm_campaign=zazulyaziz&utm_content=Anime%20Streaming%20Project&utm_medium=Social_Share
+
+Userflow of the Application:
+
+1. Sign in or Sign up using your email id. You can also use forget password to recover your account. Firebase Authentication is used to provide these services.
+
+2. Once you have logged in your profile, in the app you can search and access any anime from MyAnimeList.net, you will be provided with the rank, popularity, number of episodes, etc. of each anime. 
+
+3. Once selected, you can watch a trailer and read the synopsis of the given anime. All the data is accessed from MyAnimeList.net using Jikan API.
+
+4. You also have an option to add the anime to your Wishlist. The database stores record of all the selected anime and lets you keep a track of the episodes, you can view and manage your wishlist in the wishlist section.
+
+5. In profile section, you can see your personal details as well as the number of completed as well as ongoing animes.
 
 
-Here are some of the screenshots:
+Here are some of the screenshots of the app:
 
 ![Screenshot_20231015-121122](https://github.com/AnujDhar27/AnimeVerse/assets/90615759/6d3e709a-5580-4e7e-a849-ccad36d8bab5)
 
